@@ -106,6 +106,46 @@ As you can see "Hello, " is echoed before "World".
 It is important to note that `launch` doesn't require another thread.  
 Notice also how `launch` and `delay` are just standard Kotlin functions.
 
+### Step 3
+
+For now we are mixing non-blocking (`delay`) and blocking (`Thread.sleep`) code.
+It would be clearer to be explicit about the blocking code.  
+For this just replace `Thread.sleep(2000L)` by :
+
+```kotlin
+runBlocking {
+    delay(2000L)
+}
+```
+
+There is also a more idiomatic way to achieve this.  
+Declare the main function as an expression returning the result of the `runBlocking` function :
+
+```kotlin
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
+
+fun main(args: Array<String>) = runBlocking {
+    launch {
+        delay(1000L)
+        println("World")
+    }
+    println("Hello, ")
+    delay(2000L)
+}
+```
+
+This idiom may also be used to test suspending functions :
+```kotlin
+class Tests {
+    @Test
+    fun `test a suspending function`() = runBlocking {
+        // suspending function called
+    }
+}
+``` 
+
 ## Contribute
 
 PRs accepted.
