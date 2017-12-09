@@ -168,6 +168,29 @@ fun main(args: Array<String>) = runBlocking {
 
 Here we are getting the non-blocking code reference and waiting for it to complete using the `join()` operation.
 
+### Step 5
+
+We can extract our non-blocking code in a function :
+
+```kotlin
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
+
+fun main(args: Array<String>) = runBlocking {
+    val job = launch { printWorld() }
+    println("Hello, ")
+    job.join()
+}
+
+suspend private fun printWorld() {
+    delay(1000L)
+    println("World")
+}
+```
+
+The extracted function is marked as `suspended`. It allows the function to use suspending functions like `delay`.
+
 ## Contribute
 
 PRs accepted.
