@@ -68,6 +68,44 @@ mainClassName = "KoroutineKt"
 
 And run `./gradlew run` to run the application
 
+### Step 2
+
+Kotlin coroutines are experimental for now. We first need to enable them in the build file :
+
+```groovy
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+```
+
+For now there are released as a standalone library so we need to also add the required dependency (see [here](https://github.com/Kotlin/kotlinx.coroutines#gradle)):
+
+```groovy
+compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.20'
+``` 
+
+You can now change the `koroutine.kt` source file to use a coroutine :
+
+```kotlin
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+
+fun main(args: Array<String>) {
+    launch {
+        delay(1000L)
+        println("World")
+    }
+    println("Hello, ")
+    Thread.sleep(2000L)
+}
+```
+
+As you can see "Hello, " is echoed before "World".  
+It is important to note that `launch` doesn't require another thread.  
+Notice also how `launch` and `delay` are just standard Kotlin functions.
+
 ## Contribute
 
 PRs accepted.

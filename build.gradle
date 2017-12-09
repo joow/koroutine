@@ -21,4 +21,11 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.20'
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
 }
