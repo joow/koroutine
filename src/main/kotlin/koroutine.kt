@@ -3,10 +3,10 @@ import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 
 fun main(args: Array<String>) = runBlocking {
-    launch {
+    val job = launch {
         delay(1000L)
         println("World")
     }
     println("Hello, ")
-    delay(2000L)
+    job.join()
 }

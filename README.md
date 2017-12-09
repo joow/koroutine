@@ -146,6 +146,28 @@ class Tests {
 }
 ``` 
 
+### Step 4
+
+For now we wait 2 seconds at the end to be sure that our non blocking code is done.  
+It is not the best way to achieve this, for this we can explicitly wait for our job to be done :
+
+```kotlin
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
+
+fun main(args: Array<String>) = runBlocking {
+    val job = launch {
+        delay(1000L)
+        println("World")
+    }
+    println("Hello, ")
+    job.join()
+}
+```
+
+Here we are getting the non-blocking code reference and waiting for it to complete using the `join()` operation.
+
 ## Contribute
 
 PRs accepted.
